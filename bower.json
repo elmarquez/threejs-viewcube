@@ -16,6 +16,7 @@
     "tween.js": "https://github.com/tweenjs/tween.js.git",
     "three.js": "https://github.com/mrdoob/three.js.git",
     "mousetrap": "https://github.com/ccampbell/mousetrap.git#~1.5.3",
-    "bluebird": "https://github.com/petkaantonov/bluebird.git#~2.10.0"
+    "bluebird": "https://github.com/petkaantonov/bluebird.git#~2.10.0",
+    "jquery-2.1.4.min": "http://code.jquery.com/jquery-2.1.4.min.js"
   }
 }

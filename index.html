@@ -3,16 +3,10 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
-    <script src="vendor/jquery/jquery-2.1.4.js"></script>
+    <script src="vendor/jquery/dist/jquery.min.js"></script>
     <script src="vendor/mousetrap/mousetrap.min.js"></script>
     <script src="vendor/three.js/build/three.min.js"></script>
     <script src="vendor/tween.js/build/tween.min.js"></script>
-    <script src="vendor/GeneticAlgorithm-TSP/src/algorithm.js"></script>
-    <script src="vendor/GeneticAlgorithm-TSP/src/data.js"></script>
-    <!--<script src="vendor/GeneticAlgorithm-TSP/src/main.js"></script>-->
-    <script src="vendor/GeneticAlgorithm-TSP/src/utils.js"></script>
-    <script src="lib/controls/SimpleFirstPersonControls.js"></script>
-    <script src="lib/controls/FlyControls.js"></script>
     <script src="lib/controls/TrackballControls.js"></script>
     <script src="lib/renderers/Projector.js"></script>
     <script src="lib/viewport3d.js"></script>
@@ -78,28 +72,6 @@
 </head>
 <body>
     <div id="webgl"></div>
-    <div class="controls">
-        <div class="control-group offset-right inline">
-            <button class="button control" onclick="viewport.setMode(viewport.MODES.SELECT)">Select</button>
-            <button class="button control" onclick="viewport.setMode(viewport.MODES.ORBIT)">Orbit</button>
-            <button class="button control" onclick="viewport.setMode(viewport.MODES.WALK)">Walk</button>
-            <button class="button control" onclick="viewport.setMode(viewport.MODES.VISIT)">Visit</button>
-        </div>
-        <div class="control-group inline">
-            <button class="button control" onclick="viewport.setView(viewport.VIEWS.PERSPECTIVE)">Persp</button>
-            <button class="button control" onclick="viewport.setView(viewport.VIEWS.TOP)">Top</button>
-            <button class="button control" onclick="viewport.setView(viewport.VIEWS.LEFT)">Left</button>
-            <button class="button control" onclick="viewport.setView(viewport.VIEWS.RIGHT)">Right</button>
-            <button class="button control" onclick="viewport.setView(viewport.VIEWS.FRONT)">Front</button>
-            <button class="button control" onclick="viewport.setView(viewport.VIEWS.BACK)">Back</button>
-        </div>
-    </div>
-    <div class="orientation-control">
-        Control widget
-    </div>
-    <div class="axis-control">
-        Axis
-    </div>
     <script>
         $(document).ready(function () {
             var viewport = window.viewport = new Viewport3D('webgl');

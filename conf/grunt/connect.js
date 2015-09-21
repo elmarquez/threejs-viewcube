@@ -5,7 +5,7 @@ module.exports = {
     options: {
       open: true,
       base: '.',
-      port: 9090
+      port: 8081
     }
   }
 };
