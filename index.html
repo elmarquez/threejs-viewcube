@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="vendor/jquery/jquery-2.1.4.js"></script>
+    <script src="vendor/mousetrap/mousetrap.min.js"></script>
+    <script src="vendor/three.js/build/three.min.js"></script>
+    <script src="vendor/tween.js/build/tween.min.js"></script>
+    <script src="vendor/GeneticAlgorithm-TSP/src/algorithm.js"></script>
+    <script src="vendor/GeneticAlgorithm-TSP/src/data.js"></script>
+    <!--<script src="vendor/GeneticAlgorithm-TSP/src/main.js"></script>-->
+    <script src="vendor/GeneticAlgorithm-TSP/src/utils.js"></script>
+    <script src="lib/controls/SimpleFirstPersonControls.js"></script>
+    <script src="lib/controls/FlyControls.js"></script>
+    <script src="lib/controls/TrackballControls.js"></script>
+    <script src="lib/renderers/Projector.js"></script>
+    <script src="lib/viewport3d.js"></script>
+
+    <style>
+        body {
+            margin:0;
+            padding:0;
+        }
+        #webgl {
+            bottom: 0;
+            left: 0;
+            overflow: hidden;
+            position: absolute;
+            right: 0;
+            top: 0;
+            z-index: 500;
+        }
+        .controls {
+            height: 48px;
+            left: 20px;
+            padding: 1px;
+            position: absolute;
+            top: 20px;
+            z-index: 900;
+        }
+        .control-group {
+            margin: 0;
+            padding: 0;
+        }
+        .control {
+            border: 1px solid #222;
+            display: inline;
+            min-height: 48px;
+            overflow: hidden;
+            width: 48px;
+        }
+        .inline {
+            display: inline;
+        }
+        .offset-right {
+            margin-right: 20px;
+        }
+        .orientation-control {
+            background-color: rgba(255,255,255,1);
+            height: 92px;
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            width: 92px;
+            z-index: 900;
+        }
+        .axis-control {
+            background-color: rgba(255,255,255,1);
+            bottom: 20px;
+            height: 48px;
+            position: absolute;
+            left: 20px;
+            width: 48px;
+            z-index: 900;
+        }
+    </style>
+</head>
+<body>
+    <div id="webgl"></div>
+    <div class="controls">
+        <div class="control-group offset-right inline">
+            <button class="button control" onclick="viewport.setMode(viewport.MODES.SELECT)">Select</button>
+            <button class="button control" onclick="viewport.setMode(viewport.MODES.ORBIT)">Orbit</button>
+            <button class="button control" onclick="viewport.setMode(viewport.MODES.WALK)">Walk</button>
+            <button class="button control" onclick="viewport.setMode(viewport.MODES.VISIT)">Visit</button>
+        </div>
+        <div class="control-group inline">
+            <button class="button control" onclick="viewport.setView(viewport.VIEWS.PERSPECTIVE)">Persp</button>
+            <button class="button control" onclick="viewport.setView(viewport.VIEWS.TOP)">Top</button>
+            <button class="button control" onclick="viewport.setView(viewport.VIEWS.LEFT)">Left</button>
+            <button class="button control" onclick="viewport.setView(viewport.VIEWS.RIGHT)">Right</button>
+            <button class="button control" onclick="viewport.setView(viewport.VIEWS.FRONT)">Front</button>
+            <button class="button control" onclick="viewport.setView(viewport.VIEWS.BACK)">Back</button>
+        </div>
+    </div>
+    <div class="orientation-control">
+        Control widget
+    </div>
+    <div class="axis-control">
+        Axis
+    </div>
+    <script>
+        $(document).ready(function () {
+            var viewport = window.viewport = new Viewport3D('webgl');
+            viewport.init();
+            viewport.render();
+        });
+    </script>
+</body>
+</html>
