@@ -1,7 +1,7 @@
 {
-  "name": "threejs-test",
+  "name": "threejs-viewcube",
   "version": "0.1.0",
-  "description": "Test",
+  "description": "Viewcube navigation control",
   "private": true,
   "dependencies": {},
   "devDependencies": {
