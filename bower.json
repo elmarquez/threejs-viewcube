@@ -1,21 +1,24 @@
 {
-  "name": "threejs-test",
-  "version": "0.0.0",
+  "name": "threejs-viewcube",
+  "version": "0.1.0",
   "authors": [
     "Davis Marques <dmarques@unimelb.edu.au>"
   ],
   "license": "MIT",
+  "main": "",
   "ignore": [
-    "**/.*",
+    "NOTES.md",
+    "Gruntfile.js",
+    "package.json",
+    "conf",
     "node_modules",
-    "bower_components",
-    "test",
-    "tests"
+    "vendor",
+    "test"
   ],
   "dependencies": {
-    "bluebird": "https://github.com/petkaantonov/bluebird.git#~2.10.0",
+    "bluebird": "~2.10.0",
     "jquery": "~2.1.4",
-    "mousetrap": "https://github.com/ccampbell/mousetrap.git#~1.5.3",
+    "mousetrap": "~1.5.3",
     "three.js": "https://github.com/mrdoob/three.js.git",
     "tween.js": "https://github.com/tweenjs/tween.js.git"
   }

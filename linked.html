@@ -10,29 +10,43 @@
     <script src="lib/controls/TrackballControls.js"></script>
     <script src="lib/renderers/Projector.js"></script>
     <script src="lib/viewport3d.js"></script>
+
     <style>
         body {
+            background: #666666;
             margin:0;
             padding:0;
         }
-        #webgl {
-            bottom: 0;
-            left: 0;
-            overflow: hidden;
-            position: absolute;
-            right: 0;
-            top: 0;
-            z-index: 500;
+        .layout {
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 60px;
+            width: 1024px;
+        }
+        #scene {
+            height: 640px;
+            width: 640px;
+        }
+        #viewcube {
+            height: 128px;
+            width: 128px;
         }
     </style>
 </head>
 <body>
-    <div id="webgl"></div>
+    <div class="layout">
+        <div id="scene"></div>
+        <div id="viewcube"></div>
+    </div>
     <script>
         $(document).ready(function () {
-            var viewport = window.viewport = new Viewport3D('webgl');
-            viewport.init();
-            viewport.render();
+            var sceneCanvas = window.viewcubeCanvas= new Viewport3D('scene');
+            sceneCanvas.init();
+            sceneCanvas.render();
+
+            var viewcubeCanvas = window.viewcubeCanvas= new Viewport3D('viewcube');
+            viewcubeCanvas.init();
+            viewcubeCanvas.render();
         });
     </script>
 </body>
