@@ -3,11 +3,11 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>Threejs Viewcube Navigation Control</title>
-    <script src="vendor/jquery/dist/jquery.min.js"></script>
-    <script src="vendor/mousetrap/mousetrap.min.js"></script>
-    <script src="vendor/three.js/build/three.min.js"></script>
-    <script src="vendor/tween.js/build/tween.min.js"></script>
-    <script src="lib/viewcube.js"></script>
+    <script src="../vendor/jquery/dist/jquery.min.js"></script>
+    <script src="../vendor/mousetrap/mousetrap.min.js"></script>
+    <script src="../vendor/three.js/build/three.min.js"></script>
+    <script src="../vendor/tween.js/build/tween.min.js"></script>
+    <script src="../lib/viewcube.js"></script>
     <style>
         body {
             background: #444;
@@ -46,9 +46,9 @@
             // Create a demo model
             var loader = new THREE.JSONLoader();
             var mesh;
-            loader.load('/model/car.json', function (geometry, materials) {
+            loader.load('model/car.json', function (geometry, materials) {
                 var material = new THREE.MeshLambertMaterial({
-                    map: THREE.ImageUtils.loadTexture('/model/gtare.jpg'),
+                    map: THREE.ImageUtils.loadTexture('model/gtare.jpg'),
                     colorAmbient: [0.480000026226044, 0.480000026226044, 0.480000026226044],
                     colorDiffuse: [0.480000026226044, 0.480000026226044, 0.480000026226044],
                     colorSpecular: [0.8999999761581421, 0.8999999761581421, 0.8999999761581421]
@@ -63,7 +63,6 @@
                 scene.add(mesh);
                 render();
             });
-
         });
     </script>
 </body>
