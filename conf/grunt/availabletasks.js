@@ -10,7 +10,7 @@ module.exports = {
   main: {
     options: {
       filter: 'include',
-      tasks: ['compile','serve']
+      tasks: ['compile','release','serve']
     }
   }
 };

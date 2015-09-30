@@ -57,15 +57,15 @@ FOUR.Viewcube = (function () {
         this.FACE_OPACITY_MOUSE_OFF = 0.0;
         this.FACE_OPACITY_MOUSE_OVER = 0.8;
 
-        this.backgroundColor = new THREE.Color(0x000000, 0);
+        this.backgroundColor = new THREE.Color(0x000, 1.0);
         this.camera = null;
         this.compass = null;
         this.control = null;
         this.cube = null;
         this.domElement = document.getElementById(elementId);
         this.elementId = elementId;
-        this.fov = 60; // 50
         this.mouse = new THREE.Vector2();
+        this.projector = new THREE.Projector();
         this.raycaster = new THREE.Raycaster();
         this.renderer = null;
         this.scene = new THREE.Scene();
@@ -78,9 +78,9 @@ FOUR.Viewcube = (function () {
     Viewcube.prototype.init = function () {
         var self = this;
         // renderer
-        self.renderer = new THREE.WebGLRenderer({alpha: true, antialias: true});
-        //self.renderer.setClearColor(self.backgroundColor);
-        self.renderer.setSize(self.domElement.clientWidth, self.domElement.clientHeight);
+        self.renderer = new THREE.WebGLRenderer({antialias: true});
+        self.renderer.setClearColor(self.backgroundColor);
+        self.renderer.setSize(window.innerWidth, window.innerHeight);
         self.renderer.shadowMap.enabled = true;
         // add the output of the renderer to the html element
         self.domElement.appendChild(self.renderer.domElement);
@@ -91,8 +91,6 @@ FOUR.Viewcube = (function () {
         // setup interactions
         self.setupNavigation();
         self.setupSelection();
-        // start rendering
-        self.render();
     };
 
     Viewcube.prototype.makeCompass = function (name, x, y, z, radius, segments, color, opacity) {
@@ -200,8 +198,8 @@ FOUR.Viewcube = (function () {
         var self = this;
         // calculate mouse position in normalized device coordinates
         // (-1 to +1) for both components
-        self.mouse.x = (event.offsetX / self.domElement.clientWidth) * 2 - 1;
-        self.mouse.y = - (event.offsetY / self.domElement.clientHeight) * 2 + 1;
+        self.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+        self.mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
         // update the picking ray with the camera and mouse position
         self.raycaster.setFromCamera(self.mouse, self.camera);
         // reset opacity for all scene objects
@@ -217,16 +215,12 @@ FOUR.Viewcube = (function () {
         }
     };
 
-    Viewcube.prototype.onMouseOver = function (event) {
-        requestAnimationFrame(self.render.bind(self));
-    };
-
     Viewcube.prototype.onMouseUp = function (event) {
         var self = this;
         // calculate mouse position in normalized device coordinates
         // (-1 to +1) for both components
-        self.mouse.x = (event.offsetX / self.domElement.clientWidth) * 2 - 1;
-        self.mouse.y = - (event.offsetX / self.domElement.clientWidth) * 2 + 1;
+        self.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+        self.mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
         // update the picking ray with the camera and mouse position
         self.raycaster.setFromCamera(self.mouse, self.camera);
         // calculate objects intersecting the picking ray
@@ -241,12 +235,13 @@ FOUR.Viewcube = (function () {
         var self = this;
         TWEEN.update();
         self.renderer.render(self.scene, self.camera);
+        requestAnimationFrame(self.render.bind(self));
     };
 
     Viewcube.prototype.setupCamera = function () {
         var self = this;
         // position and point the camera to the center of the scene
-        self.camera = new THREE.PerspectiveCamera(self.fov, self.domElement.clientWidth / self.domElement.clientHeight, 0.1, 1000);
+        self.camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 1000);
         self.camera.position.x = 150;
         self.camera.position.y = 150;
         self.camera.position.z = 90;
@@ -408,13 +403,20 @@ FOUR.Viewcube = (function () {
     };
 
     Viewcube.prototype.setupNavigation = function () {
-        // bind click events to views
+        var self = this;
+        self.controller = new THREE.TrackballControls(self.camera, self.domElement);
+        self.controller.rotateSpeed = 1.0;
+        self.controller.noZoom = true;
+        self.controller.noPan = true;
+        self.controller.staticMoving = true;
+        self.controller.dynamicDampingFactor = 0.3;
+        self.controller.keys = [ 65, 83, 68 ];
+        self.controller.addEventListener('change', self.render);
     };
 
     Viewcube.prototype.setupSelection = function () {
         var self = this;
         self.domElement.addEventListener('mousemove', self.onMouseMove.bind(self), false);
-        self.domElement.addEventListener('mouseover', self.onMouseOver.bind(self), false);
         self.domElement.addEventListener('mouseup', self.onMouseUp.bind(self), false);
     };
 
@@ -496,7 +498,5 @@ FOUR.Viewcube = (function () {
             self.render();
         });
     };
-
-    return Viewcube;
 
 }());

@@ -7,32 +7,63 @@
     <script src="vendor/mousetrap/mousetrap.min.js"></script>
     <script src="vendor/three.js/build/three.min.js"></script>
     <script src="vendor/tween.js/build/tween.min.js"></script>
-    <script src="lib/controls/TrackballControls.js"></script>
-    <script src="lib/renderers/Projector.js"></script>
-    <script src="lib/viewport3d.js"></script>
+    <script src="lib/viewcube.js"></script>
     <style>
         body {
+            background: #444;
             margin:0;
             padding:0;
         }
-        #webgl {
+        #viewcube {
+            background-color: transparent;
+            border: 1px solid rgba(0,0,0,0.1);
+            height: 340px;
+            overflow: hidden;
+            position: absolute;
+            right: 20px;
+            top: 0px;
+            width: 340px;
+            z-index: 500;
+        }
+        #workspace {
             bottom: 0;
             left: 0;
             overflow: hidden;
             position: absolute;
             right: 0;
             top: 0;
-            z-index: 500;
         }
     </style>
 </head>
 <body>
-    <div id="webgl"></div>
+    <div id="workspace"></div>
+    <div id="viewcube"></div>
     <script>
         $(document).ready(function () {
-            var viewport = window.viewport = new Viewport3D('webgl');
-            viewport.init();
-            viewport.render();
+            var viewcube = window.viewcube = new FOUR.Viewcube('viewcube');
+            viewcube.init();
+
+            // Create a demo model
+            var loader = new THREE.JSONLoader();
+            var mesh;
+            loader.load('/model/car.json', function (geometry, materials) {
+                var material = new THREE.MeshLambertMaterial({
+                    map: THREE.ImageUtils.loadTexture('/model/gtare.jpg'),
+                    colorAmbient: [0.480000026226044, 0.480000026226044, 0.480000026226044],
+                    colorDiffuse: [0.480000026226044, 0.480000026226044, 0.480000026226044],
+                    colorSpecular: [0.8999999761581421, 0.8999999761581421, 0.8999999761581421]
+                });
+                mesh = new THREE.Mesh(
+                        geometry,
+                        material
+                );
+                mesh.receiveShadow = true;
+                mesh.castShadow = true;
+                mesh.rotation.y = -Math.PI/5;
+                scene.add(mesh);
+                render();
+            });
+
         });
     </script>
 </body>
