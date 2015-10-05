@@ -21,11 +21,11 @@
             overflow: hidden;
             position: absolute;
             right: 20px;
-            top: 0px;
+            top: 0;
             width: 340px;
             z-index: 500;
         }
-        #workspace {
+        #viewport {
             bottom: 0;
             left: 0;
             overflow: hidden;
@@ -36,33 +36,65 @@
     </style>
 </head>
 <body>
-    <div id="workspace"></div>
+    <div id="viewport"></div>
     <div id="viewcube"></div>
     <script>
         $(document).ready(function () {
+            // viewcube
             var viewcube = window.viewcube = new FOUR.Viewcube('viewcube');
             viewcube.init();
 
-            // Create a demo model
+            // A webgl viewport that will interact with our viewcube
+            var domElement = document.getElementById('viewport');
+            var renderer = new THREE.WebGLRenderer({antialias: true});
+            renderer.setClearColor(0x000000);
+            renderer.setSize(domElement.clientWidth, domElement.clientHeight);
+            renderer.shadowMap.enabled = true;
+            domElement.appendChild(renderer.domElement);
+
+            // scene
+            var scene = new THREE.Scene();
+
+            // lights
+            var ambientLight = new THREE.AmbientLight(0x383838);
+            var spotLight = new THREE.SpotLight(0xffffff);
+            spotLight.position.set(100, 140, 130);
+            spotLight.intensity = 2;
+            scene.add(spotLight);
+            scene.add(ambientLight);
+
+            // camera
+            var camera = new THREE.PerspectiveCamera(50, domElement.clientWidth / domElement.clientHeight, 0.1, 1000);
+            camera.lookAt(0,0,0);
+            camera.position.set(100,100,100);
+            camera.up = new THREE.Vector3(0,0,1);
+            scene.add(camera);
+
+            // add some geometry for demonstration purposes
             var loader = new THREE.JSONLoader();
             var mesh;
-            loader.load('model/car.json', function (geometry, materials) {
+            loader.load('/test/model/car.json', function (geometry, materials) {
                 var material = new THREE.MeshLambertMaterial({
-                    map: THREE.ImageUtils.loadTexture('model/gtare.jpg'),
+                    map: THREE.ImageUtils.loadTexture('/test/model/textures/gtare.jpg'),
                     colorAmbient: [0.480000026226044, 0.480000026226044, 0.480000026226044],
                     colorDiffuse: [0.480000026226044, 0.480000026226044, 0.480000026226044],
                     colorSpecular: [0.8999999761581421, 0.8999999761581421, 0.8999999761581421]
                 });
-                mesh = new THREE.Mesh(
-                        geometry,
-                        material
-                );
+                mesh = new THREE.Mesh(geometry, material);
                 mesh.receiveShadow = true;
                 mesh.castShadow = true;
                 mesh.rotation.y = -Math.PI/5;
                 scene.add(mesh);
+                // TODO zoom to fit geometry
                 render();
             });
+
+            function render () {
+                renderer.render(scene, camera);
+            }
+
+            render();
+
         });
     </script>
 </body>
